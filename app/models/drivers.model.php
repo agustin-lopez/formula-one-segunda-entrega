@@ -10,16 +10,7 @@ class driversModel {
     
     }
 
-    public function getTeamDrivers($team) {
-
-        $query = $this->db->prepare("select * from drivers where teamID = ?");
-        $query->execute([$team]);
-        $driversData = $query->fetchAll(PDO::FETCH_OBJ);
-        return $driversData;
-
-    }
-
-    function getAllDrivers() {
+    function getAll() { //OBTENER TODOS LOS PILOTOS
 
         $query = $this->db->prepare("select * from drivers");
         $query->execute();
@@ -28,7 +19,7 @@ class driversModel {
 
     }
 
-    function getSelectedDriver($driverID) {
+    function get($driverID) { //OBTENER PILOTO POR ID
 
         $query = $this->db->prepare("select * from drivers where id = ?");
         $query->execute([$driverID]);
@@ -38,7 +29,7 @@ class driversModel {
     }
 
 
-    function deleteDriverByID($driverID) {
+    function delete($driverID) { //BORRAR PILOTO POR ID
 
         $driverData = $this->getSelectedDriver($driverID); //ANTES DE BORRAR EL EQUIPO, PIDE SUS DATOS A LA DB
         $this->deleteImage($driverData->image); //BORRA LA IMAGEN GUARDADA EN EL SERVIDOR
@@ -47,60 +38,20 @@ class driversModel {
 
     }
 
-    function updateDriver($id, $name, $team, $nationality, $age, $victories, $podiums, $image) {
+    function insert($name, $team, $nationality, $age, $victories, $podiums) { //INSERTAR NUEVO PILOTO A LA BASE DE DATOS
 
-        if ($image) { //SI SE SUBIÓ UNA IMAGEN NUEVA... (NOT NULL)
+        $query = $this->db->prepare("insert into drivers (driverName, teamID, nationality, age, victories, podiums) values (?, ?, ?, ?, ?, ?, ?)");
+        $query->execute([$name, $team, $nationality, $age, $victories, $podiums]);
 
-            $driverData = $this->getSelectedDriver($id); //ANTES DE ACTUALIZAR, PIDO LOS DATOS ACTUALES DE LA ESCUDERÍA
-            $this->deleteImage($driverData->image); //BORRO LA FOTO QUE ESTÁ GUARDADA ACTUALMENTE
-            $imagePath = $this->uploadImage($image); //GUARDO LA FOTO NUEVA EN EL SERVIDOR
+        return $this->db->lastInsertId(); //DEVUELVE LA ID DE LA NUEVA INSERCIÓN
 
-            //SE MANDAN LOS DATOS Y LA IMAGEN NUEVA
-            $query = $this->db->prepare("update drivers set driverName = ?, teamID = ?, nationality = ?, age = ?, victories = ?, podiums = ?, image = ? where id = ?"); //SE ACTUALIZAN LOS DATOS
-            $query->execute([$name, $team, $nationality, $age, $victories, $podiums, $imagePath, $id]);
+    }
 
-        }
-        else { //SI NO SE SUBIÓ UNA IMAGEN NUEVA... (NULL)
+    function updateDriver($id, $name, $team, $nationality, $age, $victories, $podiums) { //MODIFICAR PILOTO ................................ ¿ES NECESARIO?
 
-            //SE MANDAN LOS DATOS SIN LA IMAGEN
-            $query = $this->db->prepare("update drivers set driverName = ?, teamID = ?, nationality = ?, age = ?, victories = ?, podiums = ? where id = ?"); //SE ACTUALIZAN LOS DATOS
-            $query->execute([$name, $team, $nationality, $age, $victories, $podiums, $id]);
-
-        }
+        $query = $this->db->prepare("update drivers set driverName = ?, teamID = ?, nationality = ?, age = ?, victories = ?, podiums = ? where id = ?"); //SE ACTUALIZAN LOS DATOS
+        $query->execute([$name, $team, $nationality, $age, $victories, $podiums, $id]);
         
-    }
-
-    private function uploadImage($image) {
-
-        $imagePath = "./images/uploaded/" . uniqid("", true) . "." . strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION)); //LE DA UN NOMBRE ÚNICO
-        move_uploaded_file($image, $imagePath); //LO MUEVE AL SERVIDOR
-        return $imagePath;
-
-    }
-
-    private function deleteImage($image) {
-
-        unlink($image); //SE BORRA LA IMÁGEN DEL SERVIDOR (FUNCIONA :P)
-
-    }
-
-    function addDriverToDB($name, $team, $nationality, $age, $victories, $podiums, $image) {
-
-        if ($image) { //SI HAY IMAGEN (NOT NULL)
-
-            //LA SUBE AL SERVIDOR
-            $imagePath = $this->uploadImage($image);
-
-        }
-        else {
-
-            $imagePath = null; //SI NO SE SUBIÓ UNA IMAGEN, SE MANDA NULL A LA BASE DE DATOS
-
-        }
-
-        $query = $this->db->prepare("insert into drivers (driverName, teamID, nationality, age, victories, podiums, image) values (?, ?, ?, ?, ?, ?, ?)");
-        $query->execute([$name, $team, $nationality, $age, $victories, $podiums, $imagePath]);
-
     }
 
 }

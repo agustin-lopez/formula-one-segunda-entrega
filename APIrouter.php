@@ -1,15 +1,13 @@
 <?php
-    require_once './libs/Router.php';
-    require_once './app/controllers/drivers.api.controller.php'; //CREAR ESTE ARCHIVO
-    require_once './app/controllers/teams.api.controller.php'; //CREAR ESTE ARCHIVO
+    require_once './libs/Router.php'; //INCLUYO LA LIBRERÍA DEL ROUTER
+    require_once './app/controllers/drivers-api.controller.php'; //<-- CREAR ESTE ARCHIVO
 
     $router = new Router();
 
-    //EJEMPLO DE TAREAS
-    $router->addRoute('drivers', 'GET', 'driversApiController', 'getDrivers');
-    $router->addRoute('drivers', 'POST', 'driversApiController', 'createDriver');
-    $router->addRoute('drivers/:ID', 'GET', 'driversApiController', 'getSelectedDriver');
+    $router->addRoute('drivers', 'GET', 'driversApiController', 'getDrivers'); //OBTENER TODOS LOS PILOTOS
+    $router->addRoute('drivers/:ID', 'GET', 'driversApiController', 'getDriver'); //OBTENER PILOTO POR ID
+    $router->addRoute('drivers/:ID', 'DELETE', 'TaskApiController', 'deleteDriver'); //BORRAR PILOTO
+    $router->addRoute('drivers', 'POST', 'driversApiController', 'createDriver'); //CREAR NUEVO PILOTO
 
-    //RUTEA
-    $router->route($_GET["resource"], $_SERVER['REQUEST_METHOD']);
+    $router->route($_GET["resource"], $_SERVER['REQUEST_METHOD']); //RUTEA
     
