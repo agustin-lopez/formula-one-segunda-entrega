@@ -16,9 +16,9 @@ class apiView {
         $status = array( //SE LE ASIGNA UN ESTADO, SEGÚN EL CÓDIGO DE ERROR
 
             200 => 'OK',
-            300 => 'Created',
+            201 => 'Created',
             400 => 'Bad request',
-            401 => 'Not authorized',
+            401 => 'Unauthorized',
             404 => 'Not found',
             500 => 'Internal server error'
 

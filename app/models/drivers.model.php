@@ -31,16 +31,14 @@ class driversModel {
 
     function delete($driverID) { //BORRAR PILOTO POR ID
 
-        $driverData = $this->getSelectedDriver($driverID); //ANTES DE BORRAR EL EQUIPO, PIDE SUS DATOS A LA DB
-        $this->deleteImage($driverData->image); //BORRA LA IMAGEN GUARDADA EN EL SERVIDOR
-        $query = $this->db->prepare("delete from drivers where id = ?"); //BORRAR
+        $query = $this->db->prepare("delete from drivers where id = ?");
         $query->execute([$driverID]);
 
     }
 
     function insert($name, $team, $nationality, $age, $victories, $podiums) { //INSERTAR NUEVO PILOTO A LA BASE DE DATOS
 
-        $query = $this->db->prepare("insert into drivers (driverName, teamID, nationality, age, victories, podiums) values (?, ?, ?, ?, ?, ?, ?)");
+        $query = $this->db->prepare("insert into drivers (driverName, teamID, nationality, age, victories, podiums) values (?, ?, ?, ?, ?, ?)");
         $query->execute([$name, $team, $nationality, $age, $victories, $podiums]);
 
         return $this->db->lastInsertId(); //DEVUELVE LA ID DE LA NUEVA INSERCIÓN
