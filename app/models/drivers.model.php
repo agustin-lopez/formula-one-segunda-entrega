@@ -36,6 +36,13 @@ class driversModel {
 
     }
 
+    function update($id, $name, $team, $nationality, $age, $victories, $podiums) { //ACTUALIZAR DATOS DE UN PILOTO
+
+        $query = $this->db->prepare("update drivers set driverName = ?, teamID = ?, nationality = ?, age = ?, victories = ?, podiums = ? where id = ?");
+        $query->execute([$name, $team, $nationality, $age, $victories, $podiums, $id]);
+        
+    }
+
     function insert($name, $team, $nationality, $age, $victories, $podiums) { //INSERTAR NUEVO PILOTO A LA BASE DE DATOS
 
         $query = $this->db->prepare("insert into drivers (driverName, teamID, nationality, age, victories, podiums) values (?, ?, ?, ?, ?, ?)");
@@ -43,13 +50,6 @@ class driversModel {
 
         return $this->db->lastInsertId(); //DEVUELVE LA ID DE LA NUEVA INSERCIÓN
 
-    }
-
-    function updateDriver($id, $name, $team, $nationality, $age, $victories, $podiums) { //MODIFICAR PILOTO ................................ ¿ES NECESARIO?
-
-        $query = $this->db->prepare("update drivers set driverName = ?, teamID = ?, nationality = ?, age = ?, victories = ?, podiums = ? where id = ?"); //SE ACTUALIZAN LOS DATOS
-        $query->execute([$name, $team, $nationality, $age, $victories, $podiums, $id]);
-        
     }
 
 }
