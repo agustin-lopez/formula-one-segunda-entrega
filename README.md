@@ -11,15 +11,21 @@ Para su funcionamiento, se debe importar la base de datos ubicada en *db/formula
 
 **RECURSO**: drivers
 
-**FORMATO POST**:
+**Ejemplos de uso**:
+
+.../api/drivers (accede a un listado de todos los pilotos)
+
+.../api/drivers/5 (accede al piloto con la ID 5)
+
+**FORMATO POST/PUT**:
 ```
 {
-    "driverName": "NAME",
-    "teamID": 1,
-    "nationality": "NACIONALITY",
-    "age": 01,
-    "victories": 01,
-    "podiums": 01,
+    "driverName": "NAME",   *[nombre del piloto]*
+    "teamID": 1,   *[ID del equipo al que pertenece (ver base de datos)]*
+    "nationality":   "NACIONALITY", *[nacionalidad]*
+    "age": 01,   *[edad]*
+    "victories": 01,   *[victorias]*
+    "podiums": 01   *[podios]*
 }
 ```
 
