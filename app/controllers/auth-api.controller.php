@@ -4,6 +4,7 @@
 require_once './app/models/drivers.model.php';
 require_once './app/views/api.view.php';
 require_once './app/helpers/auth-api.helper.php';
+require_once './app/models/auth-api.model.php';
 
 function base64url_encode($data) {
 
@@ -16,16 +17,13 @@ class AuthApiController {
     private $model;
     private $view;
     private $authHelper;
-    private $db;
-
     private $data;
 
     public function __construct() {
 
+		$this->model = new authApiModel;
         $this->view = new apiView();
         $this->authHelper = new authApiHelper();
-        $this->db = new PDO('mysql:host=localhost;'.'dbname=formula1;charset=utf8', 'root', '');
-        
         $this->data = file_get_contents("php://input");
 
     }
@@ -50,7 +48,7 @@ class AuthApiController {
 
             $basic = explode(" ",$basic);
 
-            if ($basic[0] != "Basic") {
+            if ($basic[0] != "Basic") { //SI NO ES BASIC TIRA 401 (UNAUTHORIZED)
 
                 $this->view->response('Authentication must be Basic', 401);
                 return;
@@ -61,13 +59,11 @@ class AuthApiController {
         
         //VALIDACIÓN DE USUARIO Y CONTRASEÑA
         $userPassword = base64_decode($basic[1]); //(USER:PASSWORD)
-        $userPassword = explode(":", $userpass);
-        $user = $userpassword[0]; //OBTENGO USUARIO INGRESADO
-        $password = $userpassword[1]; //OBTENGO CONTRASEÑA INGRESADA
+        $userPassword = explode(":", $userPassword);
+        $user = $userPassword[0]; //OBTENGO USUARIO INGRESADO
+        $password = $userPassword[1]; //OBTENGO CONTRASEÑA INGRESADA
 
-        var_dump($user);
-
-        if ($this->validateUserPassword($user, $password)) { //SI LA RESPUESTA ES TRUE
+        if ($this->model->validateUserPassword($user, $password)) { //SI LA RESPUESTA ES TRUE (LOS DATOS COINCIDEN)
 
             //SE CREA UN TOKEN
             $header = array(
@@ -100,27 +96,6 @@ class AuthApiController {
 
         }
            
-    }
-
-    public function validateUserPassword($user, $password) { //COMPRUEBA USUARIO Y CONTRASEÑA DE LA BASE DE DATOS
-
-        $query = $this->db->prepare("select * from users where email = ?");
-        $query->execute([$user]);
-        $userPassword = $query->fetch(PDO::FETCH_OBJ);
-
-        //if ($user && password_verify($password, $user->password))
-
-        if (($userPassword->email) && password_verify($password, $userPassword->password)) { //SI LOS DATOS COINCIDEN, DEVUELVE TRUE
-
-            return true;
-
-        }
-        else {
-
-            return false;
-
-        }
-
     }
 
 }

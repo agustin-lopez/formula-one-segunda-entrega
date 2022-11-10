@@ -85,6 +85,7 @@ class driversApiController {
         if (!$this->authHelper->isLoggedIn()) {
 
             $this->view->response("Unauthorized", 401);
+
             return;
 
         }
@@ -92,7 +93,7 @@ class driversApiController {
         $id = $params[':ID']; //AGARRA LA ID DE LOS PARÁMETROS
         $driver = $this->getData();
 
-            //SI ALGUNO DE LOS DATOS ESTÁ VACÍO, MANDA ERROR 400 (BAD REQUEST)
+        //SI ALGUNO DE LOS DATOS ESTÁ VACÍO, MANDA ERROR 400 (BAD REQUEST)
         if (empty($driver->driverName) || empty($driver->teamID) || empty($driver->nationality) || empty($driver->age) || empty($driver->victories) || empty($driver->podiums)) {
 
             $this->view->response("Missing data", 400);
@@ -117,7 +118,10 @@ class driversApiController {
 
         }
 
-        $driver = $this->getData();
+        $driver = $this->getData(); //<--- NULL
+
+        var_dump($driver);
+
 
         //SI ALGUNO DE LOS DATOS ESTÁ VACÍO, MANDA ERROR 400 (BAD REQUEST)
         if (empty($driver->driverName) || empty($driver->teamID) || empty($driver->nationality) || empty($driver->age) || empty($driver->victories) || empty($driver->podiums)) {

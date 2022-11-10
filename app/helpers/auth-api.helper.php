@@ -7,8 +7,6 @@ class AuthApiHelper {
         $auth = $this->getAuthHeader(); //[BEARER HEADER.PAYLOAD.SIGNATURE] <- FORMATO
         $auth = explode(" ", $auth);
 
-        var_dump($auth);
-
         if ($auth[0] != "Bearer" || count($auth) != 2) { //¿BASIC O BEARER? NO SÉ POR QUÉ USA LOS DOS... (NO ANDA)
 
             return array();
@@ -17,7 +15,6 @@ class AuthApiHelper {
         else {
 
             //DIVIDE EL CONTENIDO DEL TOKEN
-            var_dump($auth[1]);
             $token = explode(".", $auth[1]); //ERROR ACÁ...........................................!
             $header = $token[0];
             $payload = $token[1];
@@ -68,8 +65,6 @@ class AuthApiHelper {
     function isLoggedIn() {
 
         $payload = $this->getToken();
-
-        var_dump($payload); //ARREGLO VACÍO GODDAMN
 
         if (isset($payload->id)) {
 
