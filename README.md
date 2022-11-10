@@ -23,12 +23,12 @@ Para su funcionamiento, se debe importar la base de datos ubicada en *db/formula
 **FORMATO POST/PUT**: Para hacer una inserción (POST) o una modificación (PUT), se deben ingresar los datos de forma similar a como se muestra a continuación.
 ```
 {
-    "driverName": "NAME",   *[nombre del piloto]*
-    "teamID": 1,   *[ID del equipo al que pertenece (ver base de datos)]*
-    "nationality":   "NACIONALITY", *[nacionalidad]*
-    "age": 01,   *[edad]*
-    "victories": 01,   *[victorias]*
-    "podiums": 01   *[podios]*
+    "driverName": "NAME",
+    "teamID": 1,
+    "nationality": "NACIONALITY",
+    "age": 01,
+    "victories": 01,
+    "podiums": 01
 }
 ```
 Consultar por las IDs de los equipos en la tabla "teams" de la base de datos.
