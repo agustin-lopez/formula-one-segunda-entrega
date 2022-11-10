@@ -6,18 +6,21 @@ API con pilotos e información básica actual de Formula 1.
 
 Para su funcionamiento, se debe importar la base de datos ubicada en *db/formula1.sql*
 
-## POSTMAN
-**ENDPOINT**: http://localhost/FACULTAD/formula-one-segunda-entrega/api/(RECURSO)
+**GENERAR TOKEN PARA AUTENTICACIÓN**: .../api/auth/token (BASIC)
+
+**ENDPOINT**: .../api/(RECURSO)
 
 **RECURSO**: drivers
 
 **Ejemplos de uso**:
 
-.../api/drivers (accede a un listado de todos los pilotos)
+[GET] .../api/drivers (accede a un listado de todos los pilotos)
 
-.../api/drivers/5 (accede al piloto con la ID 5)
+[GET] .../api/drivers/5 (accede al piloto con la ID 5)
 
-**FORMATO POST/PUT**:
+[DELETE] .../api/drivers/12 (borra al piloto con la ID 5, requiere autenticación)
+
+**FORMATO POST/PUT**: Para hacer una inserción (POST) o una modificación (PUT), se deben ingresar los datos de forma similar a como se muestra a continuación.
 ```
 {
     "driverName": "NAME",
@@ -28,5 +31,8 @@ Para su funcionamiento, se debe importar la base de datos ubicada en *db/formula
     "podiums": 01
 }
 ```
+Consultar por las IDs de los equipos en la tabla "teams" de la base de datos.
 
+##ORDENAR CONTENIDO
 
+**ASCENDENTEMENTE**: #...
