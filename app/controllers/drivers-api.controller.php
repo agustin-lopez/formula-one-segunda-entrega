@@ -23,13 +23,53 @@ class driversApiController {
 
     private function getData() {
 
-        return json_decode($this->data); //AGARRA LOS DATOS DE LA URL (CREO)
+        return json_decode($this->data);
 
     }
 
     public function getDrivers($params = null) { //OBTENER TODOS LOS PILOTOS
 
-        $drivers = $this->model->getAll();
+        $attributes = $this->model->getAttributes(); //$ATTRIBUTES CONTIENE LAS COLUMNMAS DE LA TABLA DRIVERS
+        $attributesFilter = [];
+
+        foreach ($attributes as $attribute) { //POR CADA ATRIBUTO
+
+            if (isset($_GET[$attribute])) { //SI EXISTE UN ATRIBUTO INGRESADO EN LA URL
+
+                //LO GUARDA EN EL ARREGLO $ATTRIBUTESFILTER ($ATTREIBUTESFILTER[ID] => 5) <-- EJEMPLO SI SE INGRESÓ LA ID 5
+                $attributesFilter[$attribute] = ($_GET[$attribute]);
+
+            }
+
+        }
+
+        //SI SE INGRESÓ SORTBY, ORDER, ETC. SE GUARDAN ES SUS RESPECTIVAS VARIABLES
+        if (isset($_GET['sortby'])) $sortby = $_GET['sortby'];
+        else $sortby = null;
+        if (isset($_GET['order'])) $order = $_GET['order'];
+        else $order = null;
+        if (isset($_GET['page'])) $page = intval($_GET['page']); //DEBE SER UN NPUMERO
+        else $page = null;
+        if (isset($_GET['limit'])) $limit = intval($_GET['limit']);  //DEBE SER UN NPUMERO
+        else $limit = null;
+
+        /*TODO ESTO FUNCIONA BIEN
+        var_dump("attributesFilter:");
+        var_dump($attributesFilter);
+
+        var_dump("sortby:");
+        var_dump($sortby);
+
+        var_dump("order:");
+        var_dump($order);
+
+        var_dump("page:");
+        var_dump($page);
+
+        var_dump("limit:");
+        var_dump($limit); */
+
+        $drivers = $this->model->getAll($attributes, $attributesFilter, $sortby, $order, $page, $limit);
         $this->view->response($drivers);
 
     }
@@ -93,7 +133,7 @@ class driversApiController {
         $id = $params[':ID']; //AGARRA LA ID DE LOS PARÁMETROS
         $driver = $this->getData();
 
-        //SI ALGUNO DE LOS DATOS ESTÁ VACÍO, MANDA ERROR 400 (BAD REQUEST)
+        //SI ALGUNO DE LOS DATOS ESTÁ VACÍO, MANDA 400 (BAD REQUEST)
         if (empty($driver->driverName) || empty($driver->teamID) || empty($driver->nationality) || empty($driver->age) || empty($driver->victories) || empty($driver->podiums)) {
 
             $this->view->response("Missing data", 400);
@@ -118,10 +158,7 @@ class driversApiController {
 
         }
 
-        $driver = $this->getData(); //<--- NULL
-
-        var_dump($driver);
-
+        $driver = $this->getData();
 
         //SI ALGUNO DE LOS DATOS ESTÁ VACÍO, MANDA ERROR 400 (BAD REQUEST)
         if (empty($driver->driverName) || empty($driver->teamID) || empty($driver->nationality) || empty($driver->age) || empty($driver->victories) || empty($driver->podiums)) {
