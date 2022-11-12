@@ -18,11 +18,11 @@ Para su funcionamiento, se debe importar la base de datos ubicada en *db/formula
 
 [GET] ```.../api/drivers/5``` (accede al piloto con la ID 5)
 
-[POST] ```.../api/drivers/``` (lee el contenido del body y agrega un nuevo piloto - REQUIERE AUTENTICACIÓN)
+[POST] ```.../api/drivers/``` (lee el contenido del body y agrega un nuevo piloto - REQUIERE AUTENTICACIÓN BEARER)
 
-[PUT] ```.../api/drivers/11``` (lee el contenido del body y actualiza los datos del piloto seleccionado - REQUIERE AUTENTICACIÓN)
+[PUT] ```.../api/drivers/11``` (lee el contenido del body y actualiza los datos del piloto seleccionado - REQUIERE AUTENTICACIÓN BEARER)
 
-[DELETE] ```.../api/drivers/12``` (borra al piloto con la ID 5 - REQUIERE AUTENTICACIÓN)
+[DELETE] ```.../api/drivers/12``` (borra al piloto con la ID 5 - REQUIERE AUTENTICACIÓN BEARER)
 
 **FORMATO POST/PUT**: Para hacer una inserción (POST) o una modificación (PUT), se deben ingresar los datos a como se muestran a continuación.
 ```
@@ -46,14 +46,14 @@ Consultar por las IDs de los equipos en la tabla "teams" de la base de datos.
 **ORDENAR POR ATRIBUTO**: ```.../api/drivers?sortby=(ATRIBUTO)```
 
 Los atributos válidos son:
-    - drivername (nombre del piloto)
-    - teamid (ID de la escudería a la que pertenece)
-    - nationality (nacionalidad)
-    - age (edad)
-    - victories (victorias)
-    - podiums (podios)
+- drivername (nombre del piloto)
+- teamid (ID de la escudería a la que pertenece)
+- nationality (nacionalidad)
+- age (edad)
+- victories (victorias)
+- podiums (podios)
 
-Se puede ordenar por atributo ascendente o descendentemente agregando %order=(asc/desc) al final de la url, como se mostró previamente
+Se puede ordenar por atributo ascendente o descendentemente agregando "%order=(asc/desc)" al final de la url, como se mostró anteriormente.
 
 Ejemplos:
 
@@ -75,4 +75,4 @@ Ejemplos:
 
 ```.../api/drivers?age=%3``` (busca a los pilotos cuya edad contenga un 3)
 
-```.../api/drivers?nationality=British&order=desc``` (busca los pitolos con nacionalidad británica, y los ordena descendientementep por ID)
+```.../api/drivers?nationality=British&order=desc``` (busca los pitolos con nacionalidad británica, y los ordena descendientemente por ID)
