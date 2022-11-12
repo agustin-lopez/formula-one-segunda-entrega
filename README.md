@@ -18,9 +18,9 @@ Para su funcionamiento, se debe importar la base de datos ubicada en *db/formula
 
 [GET] ```.../api/drivers/5``` (accede al piloto con la ID 5)
 
-[POST] ```.../api/drivers/`` (lee el contenido del body y agrega un nuevo piloto - REQUIERE AUTENTICACIÓN)
+[POST] ```.../api/drivers/``` (lee el contenido del body y agrega un nuevo piloto - REQUIERE AUTENTICACIÓN)
 
-[PUT] ```.../api/drivers/11`` (lee el contenido del body y actualiza los datos del piloto seleccionado - REQUIERE AUTENTICACIÓN)
+[PUT] ```.../api/drivers/11``` (lee el contenido del body y actualiza los datos del piloto seleccionado - REQUIERE AUTENTICACIÓN)
 
 [DELETE] ```.../api/drivers/12``` (borra al piloto con la ID 5 - REQUIERE AUTENTICACIÓN)
 
