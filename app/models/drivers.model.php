@@ -51,7 +51,7 @@ class driversModel {
         if (!empty($sqlFilter)) { //SI NO ESTÁ VACÍO
 
             //SE CONCATENA LA CONSULTA (SELECT * FROM DRIVERS) + WHERE + LOS FILTROS (...ID LIKE ? AND DRIVERNAME LIKE ? AND...) Y LE BORRA EL ÚLTIMO "AND"
-            $sql .= " WHERE" . rtrim($sql_filter, " AND");
+            $sql .= " WHERE " . rtrim($sqlFilter, " AND");
 
         }
 
@@ -108,6 +108,8 @@ class driversModel {
         $query = $this->db->prepare($sql);
 
         if (!empty($filterValues)) {
+
+            var_dump($filterValues);
 
             $query->execute($filterValues);
 

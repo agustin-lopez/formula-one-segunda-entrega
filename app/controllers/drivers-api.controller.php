@@ -53,22 +53,6 @@ class driversApiController {
         if (isset($_GET['limit'])) $limit = intval($_GET['limit']);  //DEBE SER UN NPUMERO
         else $limit = null;
 
-        /*TODO ESTO FUNCIONA BIEN
-        var_dump("attributesFilter:");
-        var_dump($attributesFilter);
-
-        var_dump("sortby:");
-        var_dump($sortby);
-
-        var_dump("order:");
-        var_dump($order);
-
-        var_dump("page:");
-        var_dump($page);
-
-        var_dump("limit:");
-        var_dump($limit); */
-
         $drivers = $this->model->getAll($attributes, $attributesFilter, $sortby, $order, $page, $limit);
         $this->view->response($drivers);
 
