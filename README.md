@@ -46,12 +46,12 @@ Consultar por las IDs de los equipos en la tabla "teams" de la base de datos.
 **ORDENAR POR ATRIBUTO**: ```.../api/drivers?sortby=(ATRIBUTO)```
 
 Los atributos válidos son:
-    *drivername (nombre del piloto)
-    *teamid (ID de la escudería a la que pertenece)
-    *nationality (nacionalidad)
-    *age (edad)
-    *victories (victorias)
-    *podiums (podios)
+    * drivername (nombre del piloto)
+    * teamid (ID de la escudería a la que pertenece)
+    * nationality (nacionalidad)
+    * age (edad)
+    * victories (victorias)
+    * podiums (podios)
 
 Se puede ordenar por atributo ascendente o descendentemente agregando %order=(asc/desc) al final de la url, como se mostró previamente
 
