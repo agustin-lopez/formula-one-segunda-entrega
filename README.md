@@ -24,24 +24,24 @@ Para su funcionamiento, se debe importar la base de datos ubicada en *db/formula
 
 [DELETE] ```.../api/drivers/12``` (borra al piloto con la ID 5 - REQUIERE AUTENTICACIÓN)
 
-**FORMATO POST/PUT**: Para hacer una inserción (POST) o una modificación (PUT), se deben ingresar los datos de forma similar a como se muestra a continuación.
+**FORMATO POST/PUT**: Para hacer una inserción (POST) o una modificación (PUT), se deben ingresar los datos a como se muestran a continuación.
 ```
 {
     "driverName": "NAME",
     "teamID": 1,
     "nationality": "NACIONALITY",
-    "age": 01,
-    "victories": 01,
-    "podiums": 01
+    "age": 1,
+    "victories": 1,
+    "podiums": 1
 }
 ```
 Consultar por las IDs de los equipos en la tabla "teams" de la base de datos.
 
 ## FILTRAR Y ORDENAR CONTENIDO
 
-**ASCENDENTEMENTE (ID POR DEFECTO)**: ```.../api/drivers?order=asc```
+**ASCENDENTEMENTE**: ```.../api/drivers?order=asc```
 
-**DESCENDENTEMENTE (ID POR DEFECTO)**: ```.../api/drivers?order=desc```
+**DESCENDENTEMENTE**: ```.../api/drivers?order=desc```
 
 **ORDENAR POR ATRIBUTO**: ```.../api/drivers?sortby=(ATRIBUTO)```
 
