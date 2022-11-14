@@ -32,25 +32,40 @@ class driversApiController {
         $attributes = $this->model->getAttributes(); //$ATTRIBUTES CONTIENE LAS COLUMNMAS DE LA TABLA DRIVERS
         $attributesFilter = [];
 
+        /*
+        ATTRIBUTES { 
+            [0] => "ID"
+            [1] => "DRIVERNAME"
+            [2] => "TEAMID"
+            ETC...
+        }
+        */
         foreach ($attributes as $attribute) { //POR CADA ATRIBUTO
 
             if (isset($_GET[$attribute])) { //SI EXISTE UN ATRIBUTO INGRESADO EN LA URL
 
-                //LO GUARDA EN EL ARREGLO $ATTRIBUTESFILTER ($ATTREIBUTESFILTER[ID] => 5) <-- EJEMPLO SI SE INGRESÓ LA ID 5
+                //LO GUARDA EN EL ÍNDICE DE $ATTRIBUTESFILTER, Y SU VALOR DENTRO DEL ARREGLO ($ATTREIBUTESFILTER[ID] => 5) <-- EJEMPLO SI SE INGRESÓ LA ID 5
                 $attributesFilter[$attribute] = ($_GET[$attribute]);
 
             }
 
         }
 
+        /* EJEMPLO
+        ATTRIBUTESFILTER {
+            [NATIONALITY] => "BRITISH"
+            [PODIUMS] => "%8"
+        }
+        */
+
         //SI SE INGRESÓ SORTBY, ORDER, ETC. SE GUARDAN ES SUS RESPECTIVAS VARIABLES
         if (isset($_GET['sortby'])) $sortby = $_GET['sortby'];
         else $sortby = null;
         if (isset($_GET['order'])) $order = $_GET['order'];
         else $order = null;
-        if (isset($_GET['page'])) $page = intval($_GET['page']); //DEBE SER UN NPUMERO
+        if (isset($_GET['page'])) $page = intval($_GET['page']); //DEBE SER UN NÚMERO
         else $page = null;
-        if (isset($_GET['limit'])) $limit = intval($_GET['limit']);  //DEBE SER UN NPUMERO
+        if (isset($_GET['limit'])) $limit = intval($_GET['limit']);  //DEBE SER UN NÚMERO
         else $limit = null;
 
         $drivers = $this->model->getAll($attributes, $attributesFilter, $sortby, $order, $page, $limit);

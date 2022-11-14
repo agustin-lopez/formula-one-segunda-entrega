@@ -18,8 +18,10 @@ class driversModel {
 
         $arrayAttributes[0] = ""; //GUARDA STRING VACÍO EN EL PRIMER ÍNDICE DEL ARREGLO
 
+        //$ATTRIBUTES CONTIENE TODA LA INFORMACIÓN DE CADA COLUMNA DE LA TABLA
         foreach ($attributes as $key => $attribute) {
 
+            //POR CADA ATRIBUTO, SE GUARDA SOLO EL NOMBRE EN MINÚSCULAS EN EL ARREGLO $ARRAYATTRIBUTES
             $arrayAttributes[$key + 1] = strtolower($attribute->Field);
 
         }
@@ -30,19 +32,28 @@ class driversModel {
 
     function getAll($attributes, $attributesFilter, $sortby, $order, $page, $limit) { //OBTENER TODOS LOS PILOTOS
 
+        //INICIO DE LA CONSULTA
         $sql = "SELECT * FROM drivers";
 
         //FILTRAR POR ATRIBUTO DE LA TABLA (COLUMNA)
+        //EJEMPLO: .../API/DRIVERS?NATIONALITY=AUSTRALIAN&PODIUMS=32
         $sqlFilter = "";
         $filterValues = [];
 
         foreach ($attributesFilter as $key => $attribute) { //RECORRE EL ARREGLO DE FILTRO DE ATRIBUTOS
 
-            if (!empty($attribute)) { //SI NO ESTÁ VACÍO
+            if (!empty($attribute)) { //SI EL ATRIBUTO NO ESTÁ VACÍO
 
-                //SE CONCATENA EL ÍNDICE + FRAGMENTO DE CONSULTA (...ID LIKE ? AND DRIVERNAME LIKE ? AND...) <-- EJEMPLO
-                $sqlFilter .= "$key LIKE ? AND";
-                $filterValues[] = "$attribute"; //SE GUARDA EL ATRIBUTO EN EL OTRO ARREGLO
+                //SE CONCATENA EL ÍNDICE + FRAGMENTO DE CONSULTA (...NATIONALITY LIKE ? AND PODIUMS LIKE ?) <-- EJEMPLO
+                $sqlFilter .= "$key LIKE ? AND ";
+                //SE GUARDA EL VALOR DEL ATRIBUTO EN EL OTRO ARREGLO
+                $filterValues[] = "$attribute";
+                /*
+                FILTERVALUES {
+                    [0] => "AUSTRALIAN"
+                    [1] => "32""
+                }
+                */
 
             }
 
@@ -50,7 +61,8 @@ class driversModel {
 
         if (!empty($sqlFilter)) { //SI NO ESTÁ VACÍO
 
-            //SE CONCATENA LA CONSULTA (SELECT * FROM DRIVERS) + WHERE + LOS FILTROS (...ID LIKE ? AND DRIVERNAME LIKE ? AND...) Y LE BORRA EL ÚLTIMO "AND"
+            //SE CONCATENA LA CONSULTA (SELECT * FROM DRIVERS) + WHERE + LOS FILTROS (...NATIONALITY LIKE ? AND PODIUMS LIKE ?)
+            //Y LE BORRA EL ÚLTIMO "AND" PARA QUE NO SE ROMPA LA CONSULTA
             $sql .= " WHERE " . rtrim($sqlFilter, " AND");
 
         }
@@ -58,7 +70,6 @@ class driversModel {
         //ORDENAR POR ATRIBUTO
         if (!empty($sortby)) {
 
-            //$filterby = $_GET['filter'];
             if (array_search($sortby, $attributes) != false) {
 
                 //SE CONCATENA LA CONSULTA (SELECT * FROM DRIVERS) + ORDER BY (DRIVERNAME) <-- EJEMPLO
@@ -96,6 +107,7 @@ class driversModel {
         }
 
         //PAGINACIÓN
+
         //SI $PAGE NO ESTÁ VACÍO, ES UN NÚMERO, ES MAYOR A CERO Y $LIMIT NO ESTÁ VACÍO, ES NUMÉRICO Y MAYOR A CERO...
         if (!empty($page) && is_numeric($page) && $page > 0 && !empty($limit) && is_numeric($limit) && $limit > 0) {
 
@@ -108,8 +120,6 @@ class driversModel {
         $query = $this->db->prepare($sql);
 
         if (!empty($filterValues)) {
-
-            var_dump($filterValues);
 
             $query->execute($filterValues);
 
