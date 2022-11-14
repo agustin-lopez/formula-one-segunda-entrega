@@ -39,9 +39,9 @@ Consultar por las IDs de los equipos en la tabla "teams" de la base de datos.
 
 ## FILTRAR Y ORDENAR CONTENIDO
 
-**ASCENDENTEMENTE**: ```.../api/drivers?order=asc```
+**ASCENDENTEMENTE**: ```.../api/drivers?order=asc``` <br> <br>
 
-**DESCENDENTEMENTE**: ```.../api/drivers?order=desc```
+**DESCENDENTEMENTE**: ```.../api/drivers?order=desc``` <br> <br>
 
 **ORDENAR POR ATRIBUTO**: ```.../api/drivers?sortby=(ATRIBUTO)```
 
@@ -61,7 +61,7 @@ Ejemplos:
 
 ```.../api/drivers?sortby=victories&order=desc``` (ordena los pilotos descendentemente por cantidad de victorias)
 
-```.../api/drivers?sortby=age&order=asc``` (ordena los pilotos ascendentemente por su edad)
+```.../api/drivers?sortby=age&order=asc``` (ordena los pilotos ascendentemente por su edad) <br> <br>
 
 **BUSCAR POR ATRIBUTO**: ```.../api/drivers?(ATRIBUTO)=(VALOR)```
 
@@ -75,4 +75,61 @@ Ejemplos:
 
 ```.../api/drivers?age=%3``` (busca a los pilotos cuya edad contenga un 3)
 
-```.../api/drivers?nationality=British&order=desc``` (busca los pitolos con nacionalidad británica, y los ordena descendientemente por ID)
+```.../api/drivers?nationality=British&order=desc``` (busca los pitolos con nacionalidad británica, y los ordena descendientemente por ID) <br> <br>
+
+**PAGINACIÓN**: ```.../api/drivers?limit=(VALOR)&page=(VALOR)```
+
+Esta función permite consultar la API de a segmentos. Se debe ingresar en "limit" la cantidad de resultados que desea ver por página y en "page", el número de página.
+
+Para su correcto funcionamiento, se deben ingresar valores numéricos mayores a cero.
+
+Ejemplos:
+
+```.../api/drivers?limit=4&page=2``` (agrupa las páginas de a cuatro elementos, y muestra la página dos)
+
+El resultado sería el siguiente:
+
+```
+[
+    {
+        "id": 5,
+        "driverName": "Max Verstappen",
+        "teamID": 3,
+        "nationality": "Dutch",
+        "age": 25,
+        "victories": 32,
+        "podiums": 74,
+        "image": "./images/uploaded/634c82d6a51612.34210999.png"
+    },
+    {
+        "id": 6,
+        "driverName": "Sergio Pérez",
+        "teamID": 3,
+        "nationality": "Mexican",
+        "age": 32,
+        "victories": 4,
+        "podiums": 24,
+        "image": "./images/uploaded/634c82fee42dc5.36915849.png"
+    },
+    {
+        "id": 7,
+        "driverName": "Charles Leclerc",
+        "teamID": 4,
+        "nationality": "Monacan",
+        "age": 24,
+        "victories": 5,
+        "podiums": 22,
+        "image": "./images/uploaded/634c8365a29281.24373806.png"
+    },
+    {
+        "id": 8,
+        "driverName": "Carlos Sainz",
+        "teamID": 4,
+        "nationality": "Spanish",
+        "age": 28,
+        "victories": 1,
+        "podiums": 14,
+        "image": "./images/uploaded/634c839a549620.80102495.png"
+    }
+]
+```
